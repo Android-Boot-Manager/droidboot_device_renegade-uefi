@@ -191,7 +191,16 @@ then
 	echo "Updating submodules"
 	if "${CHINESE}"
 	then
-		git submodule set-uril GPLDrivers/Library/droidboot			    https://hub.nuaa.cf/Android-Boot-Manager/droidboot_gui.git
+		git submodule set-url GPLDrivers/Library/droidboot			    https://hub.nuaa.cf/Android-Boot-Manager/droidboot_gui.git
+		
+		pushd GPLDrivers/Library/droidboot
+		git submodule set-url lib/ext4                                              https://hub.nuaa.cf/Android-Boot-Manager/droidboot_ext4
+		git submodule set-url lib/lvgl						    https://hub.nuaa.cf/Android-Boot-Manager/droidboot_lvgl
+		git submodule set-url lib/droidboot_platforms				    https://hub.nuaa.cf/Android-Boot-Manager/droidboot_platforms
+		git submodule set-url lib/libudft					    https://hub.nuaa.cf/Android-Boot-Manager/libufdt
+		git submodule set-url lib/minigz					    https://hub.nuaa.cf/Android-Boot-Manager/droidboot_minigz
+		popd
+		
 		git submodule set-url Common/edk2                                           https://hub.nuaa.cf/tianocore/edk2.git
 		git submodule set-url Common/edk2-platforms                                 https://hub.nuaa.cf/tianocore/edk2-platforms.git
 		git submodule set-url Platform/EFI_Binaries                                 https://hub.nuaa.cf/edk2-porting/edk2-sdm845-binary.git
@@ -214,6 +223,9 @@ then
 	else
 		git submodule init;git submodule update --depth 1
 		pushd Common/edk2
+		git submodule init;git submodule update
+		popd
+		pushd GPLDrivers/Library/droidboot
 		git submodule init;git submodule update
 		popd
 	fi
